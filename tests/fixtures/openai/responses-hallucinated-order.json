@@ -1,0 +1,17 @@
+{
+  "id": "resp_fixture_0002",
+  "object": "response",
+  "status": "completed",
+  "output": [
+    {
+      "type": "message",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "output_text",
+          "text": "{\"intent\":\"order_status\",\"confidence\":0.9,\"product_query\":null,\"order_number\":\"1003\",\"wants_human\":false,\"sentiment\":\"neutral\"}"
+        }
+      ]
+    }
+  ]
+}

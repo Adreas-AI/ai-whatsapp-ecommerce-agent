@@ -1,0 +1,12 @@
+node_modules/
+dist/
+coverage/
+*.log
+.env
+.env.*
+!.env.example
+# Local n8n data and any exported credentials with real secrets
+.n8n/
+n8n/*.credentials.local.json
+.DS_Store
+Thumbs.db

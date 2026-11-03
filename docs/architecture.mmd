@@ -1,0 +1,46 @@
+%% Source for docs/architecture.svg and docs/architecture.png
+%% Render: bash scripts/render-diagram.sh
+flowchart TB
+    customer(["Customer · WhatsApp app"])
+    wa["Meta WhatsApp Cloud API<br/>webhooks + Graph API /messages"]
+
+    subgraph GW["Synvoca Gateway"]
+        direction LR
+        hook["Webhook /webhook<br/>verify-token challenge<br/>X-Hub-Signature-256 check<br/>dedupe · PII redaction"]
+        tools["Tool API /tools/*<br/>turn token · strict schemas<br/>order ownership check<br/>24h window · idempotent reply"]
+    end
+
+    subgraph N8N["n8n workflow"]
+        direction LR
+        flow["Orchestration<br/>context → classify → guard<br/>→ tool → reply<br/>bounded retries · error branch"]
+        openai["OpenAI Responses API<br/>intent classification only<br/>redacted text · store: false"]
+    end
+
+    woo["WooCommerce REST API v3<br/>products · orders (read-only)"]
+    hub["HubSpot CRM v3<br/>contacts · tickets (no deals)"]
+    human(["Human support agent"])
+
+    customer -->|"1 message"| wa
+    wa -->|"2 signed POST"| hook
+    hook -->|"3 redacted turn + turn token"| flow
+    flow <-->|"4 classify"| openai
+    flow -->|"5 allowlisted tool calls"| tools
+    tools -->|"6 product search · order verify"| woo
+    tools -->|"6 contact upsert · ticket"| hub
+    tools -->|"7 reply"| wa
+    wa -->|"8 reply"| customer
+    hub -.->|"escalation"| human
+    human -.->|"reply in 24h window or approved template"| wa
+
+    classDef ext fill:#f1f3f6,stroke:#8792a2,color:#17202b
+    classDef gw fill:#e6f4f2,stroke:#0f766e,color:#0b3b37
+    classDef orch fill:#fff4e5,stroke:#c2410c,color:#4a1d06
+    classDef ai fill:#eef2ff,stroke:#4f46e5,color:#1e1b4b
+    classDef person fill:#ffffff,stroke:#17202b,color:#17202b
+    class wa,woo,hub ext
+    class hook,tools gw
+    class flow orch
+    class openai ai
+    class customer,human person
+    style GW fill:#f7fbfa,stroke:#0f766e
+    style N8N fill:#fffaf3,stroke:#c2410c

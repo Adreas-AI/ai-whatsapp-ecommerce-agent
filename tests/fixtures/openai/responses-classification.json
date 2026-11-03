@@ -1,0 +1,22 @@
+{
+  "id": "resp_fixture_0001",
+  "object": "response",
+  "status": "completed",
+  "model": "gpt-5-mini",
+  "output": [
+    { "id": "rs_fixture", "type": "reasoning", "summary": [] },
+    {
+      "id": "msg_fixture",
+      "type": "message",
+      "status": "completed",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "output_text",
+          "annotations": [],
+          "text": "{\"intent\":\"order_status\",\"confidence\":0.93,\"product_query\":null,\"order_number\":\"1002\",\"wants_human\":false,\"sentiment\":\"neutral\"}"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Support Agent Console</title>
+    <meta name="description" content="Local demo console for the Synvoca AI WhatsApp e-commerce support agent. Demo data is fictional." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <rect x="2" y="2" width="28" height="28" rx="8" />
+          <path d="M9 12.5h14M9 17h9M12 23l-3 3v-3" />
+        </svg>
+        <div>
+          <h1>AI WhatsApp E-commerce Support Agent</h1>
+          <p class="sub">Synvoca · gateway console</p>
+        </div>
+      </div>
+      <ul class="chips" id="integrations" aria-label="Integration status"></ul>
+    </header>
+
+    <div class="banner" id="mode-banner" role="status" hidden>
+      <strong>DEMO MODE</strong>
+      <span>All people, products and orders are fictional. WhatsApp, OpenAI, WooCommerce and HubSpot are mocked; nothing is sent or written anywhere. Real integrations are <em>not</em> exercised here.</span>
+    </div>
+
+    <main class="layout">
+      <section class="panel chat" aria-labelledby="chat-title">
+        <div class="panel-head">
+          <h2 id="chat-title">Conversation</h2>
+          <button class="ghost" id="reset" type="button" title="Clear demo state">Reset demo</button>
+        </div>
+
+        <div class="scenarios" id="scenarios" aria-label="Demo scenarios"></div>
+
+        <label class="sender">
+          <span>Customer (fictional)</span>
+          <select id="sender"></select>
+        </label>
+
+        <ol class="messages" id="messages" aria-live="polite"></ol>
+
+        <form class="composer" id="composer">
+          <input id="text" name="text" autocomplete="off" maxlength="1000" placeholder="Type a customer message…" aria-label="Customer message" />
+          <button type="submit" id="send">Send</button>
+        </form>
+      </section>
+
+      <div class="side">
+        <section class="panel" aria-labelledby="intent-title">
+          <div class="panel-head">
+            <h2 id="intent-title">Detected intent</h2>
+            <span class="muted small" id="turn-label"></span>
+          </div>
+          <div id="intent" class="empty">Send a message to see how it is classified and routed.</div>
+        </section>
+
+        <section class="panel" aria-labelledby="tools-title">
+          <div class="panel-head"><h2 id="tools-title">Tool calls</h2></div>
+          <ol id="tools" class="timeline empty">No tool calls yet.</ol>
+        </section>
+
+        <section class="panel" aria-labelledby="order-title">
+          <div class="panel-head"><h2 id="order-title">Order lookup</h2></div>
+          <div id="order" class="empty">No order lookup in this turn.</div>
+        </section>
+
+        <section class="panel" aria-labelledby="crm-title">
+          <div class="panel-head">
+            <h2 id="crm-title">CRM updates</h2>
+            <span class="tag mock">mock HubSpot</span>
+          </div>
+          <div id="crm" class="empty">No CRM activity yet.</div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="foot">
+      <span>Replies are built from tool data only. The model classifies; it never writes facts.</span>
+      <a href="/healthz">health</a>
+    </footer>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

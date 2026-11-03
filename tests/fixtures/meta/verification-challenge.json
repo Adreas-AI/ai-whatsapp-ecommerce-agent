@@ -1,0 +1,6 @@
+{
+  "description": "Query parameters Meta sends to GET /webhook when you click 'Verify and save'. Token is the DEMO value.",
+  "valid": { "hub.mode": "subscribe", "hub.verify_token": "demo-verify-token", "hub.challenge": "1158201444" },
+  "wrong_token": { "hub.mode": "subscribe", "hub.verify_token": "guess", "hub.challenge": "1158201444" },
+  "wrong_mode": { "hub.mode": "unsubscribe", "hub.verify_token": "demo-verify-token", "hub.challenge": "1158201444" }
+}

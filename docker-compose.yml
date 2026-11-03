@@ -1,0 +1,45 @@
+# Local stack.
+#   Gateway only (DEMO_MODE, local orchestrator):   docker compose up --build
+#   Gateway + n8n (workflow orchestrates):          ORCHESTRATOR=n8n docker compose --profile n8n up --build
+# Ports are bound to 127.0.0.1 only. Expose the gateway's /webhook to Meta through
+# an HTTPS tunnel or reverse proxy, never the /tools or /api routes.
+name: synvoca-whatsapp-agent
+
+services:
+  gateway:
+    build: .
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      HOST: 0.0.0.0
+      DEMO_MODE: ${DEMO_MODE:-true}
+      ORCHESTRATOR: ${ORCHESTRATOR:-local}
+      N8N_INBOUND_WEBHOOK_URL: ${N8N_INBOUND_WEBHOOK_URL:-http://n8n:5678/webhook/synvoca-whatsapp-turn}
+    ports:
+      - "127.0.0.1:${GATEWAY_HOST_PORT:-3000}:3000"
+    restart: unless-stopped
+
+  n8n:
+    image: n8nio/n8n:2.20.12
+    profiles: ["n8n"]
+    environment:
+      N8N_PORT: 5678
+      GENERIC_TIMEZONE: UTC
+      N8N_DIAGNOSTICS_ENABLED: "false"
+      N8N_PERSONALIZATION_ENABLED: "false"
+      # Set a long random value for anything beyond a local demo; it encrypts stored credentials.
+      N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY:-local-demo-only-encryption-key}
+      # Data minimisation: prune execution data after 72 hours.
+      EXECUTIONS_DATA_PRUNE: "true"
+      EXECUTIONS_DATA_MAX_AGE: "72"
+      SYNVOCA_TOOLS_BASE_URL: http://gateway:3000
+    ports:
+      - "127.0.0.1:${N8N_HOST_PORT:-5678}:5678"
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./n8n:/import:ro
+    restart: unless-stopped
+
+volumes:
+  n8n_data: {}

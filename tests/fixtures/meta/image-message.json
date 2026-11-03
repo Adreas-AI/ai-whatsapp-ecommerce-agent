@@ -1,0 +1,27 @@
+{
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "DEMO_WABA_ID",
+      "changes": [
+        {
+          "field": "messages",
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": { "display_phone_number": "15550009999", "phone_number_id": "DEMO_PHONE_NUMBER_ID" },
+            "contacts": [{ "profile": { "name": "Sam Chen (fictional)" }, "wa_id": "15550100002" }],
+            "messages": [
+              {
+                "from": "15550100002",
+                "id": "wamid.FIXTURE.IMAGE.0001",
+                "timestamp": "1793750400",
+                "type": "image",
+                "image": { "mime_type": "image/jpeg", "sha256": "ZmFrZQ==", "id": "DEMO_MEDIA_ID" }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "name": "ai-whatsapp-ecommerce-agent",
+  "version": "1.0.0",
+  "description": "AI WhatsApp e-commerce support agent: Meta WhatsApp Cloud API + n8n + OpenAI + HubSpot + WooCommerce, with a safe DEMO_MODE.",
+  "author": "Synvoca",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20.12"
+  },
+  "scripts": {
+    "dev": "node --env-file-if-exists=.env --import tsx --watch src/server.ts",
+    "demo": "node --env-file-if-exists=.env --import tsx src/server.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node --env-file-if-exists=.env dist/server.js",
+    "lint": "eslint .",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "npm run lint && npm run typecheck && npm test && npm run build",
+    "build:workflow": "node --import tsx scripts/build-n8n-workflow.ts",
+    "simulate": "node --env-file-if-exists=.env --import tsx scripts/simulate-webhook.ts"
+  },
+  "dependencies": {
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@types/node": "^22.10.2",
+    "eslint": "^9.17.0",
+    "globals": "^15.14.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.1",
+    "vitest": "^2.1.8"
+  }
+}
